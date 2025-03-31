@@ -8,6 +8,7 @@ export default function Home() {
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searching, setSearching] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const fetchProducts = async () => {
     try {
@@ -32,9 +33,7 @@ export default function Home() {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
     setSearching(searchTerm.length > 0);
-
-    const searchTermElement = document.getElementById("search-term");
-    if (searchTermElement) searchTermElement.innerHTML = searchTerm;
+    setSearchValue(searchTerm);
 
     const filteredAdvocates = advocates.filter((advocate) => {
       return (
@@ -50,6 +49,7 @@ export default function Home() {
   };
 
   const handleReset = () => {
+    setSearchValue("");
     setFilteredAdvocates(advocates);
   };
 
@@ -62,10 +62,14 @@ export default function Home() {
         <h2>Search</h2>
         {searching && (
           <p>
-            Searching for: <span id="search-term"></span>
+            Searching for: <span id="search-term">{searchValue}</span>
           </p>
         )}
-        <input style={{ border: "1px solid black", height: "35px"}} onChange={handleSearch} />
+        <input
+          style={{ border: "1px solid black", height: "35px" }}
+          onChange={handleSearch}
+          value={searchValue}
+        />
         <button
           style={{ border: "1px solid black", padding: "5px", margin: 5 }}
           onClick={handleReset}
@@ -78,8 +82,8 @@ export default function Home() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table style={{ width: "100%", overflowX: "auto"}}>
-          <thead style={{position: "sticky", top: "0", background: "grey"}}>
+        <table style={{ width: "100%", overflowX: "auto" }}>
+          <thead style={{ position: "sticky", top: "0", background: "grey" }}>
             <tr>
               <th>First Name</th>
               <th>Last Name</th>

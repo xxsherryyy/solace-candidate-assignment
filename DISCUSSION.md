@@ -45,5 +45,3 @@
 - Add pagination to "/api/advocates" to render a set number of advocates at a time 
 
 - Add sorting to table
-
-- need to add state for input field to handle event and clear input field on "Reset Search" click
